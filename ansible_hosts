@@ -1,0 +1,2 @@
+[webserver]
+ec2-35-174-137-212.compute-1.amazonaws.com ansible_user=ec2-user

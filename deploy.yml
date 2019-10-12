@@ -1,0 +1,22 @@
+---
+- name: install and start apache
+  hosts: webserver
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  tasks:
+  - name: install httpd
+    yum: name=httpd state=latest
+    register: httpd_check
+  - name: Copy httpd.conf and html file
+    copy:
+     src: "{{ item.src }}"
+     dest: "{{ item.dest }}"
+    with_items:
+     - { src: 'httpd.conf',dest: '/etc/httpd/conf' }
+     - { src: 'index.html',dest: '/var/www/html' }
+  - name: start httpd
+    service:
+       name: httpd
+       state: started
